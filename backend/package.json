@@ -30,7 +30,8 @@
     "nodemailer": "^7.0.10",
     "pg": "^8.11.3",
     "redis": "^4.6.10",
-    "winston": "^3.11.0"
+    "winston": "^3.11.0",
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
