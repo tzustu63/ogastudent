@@ -29,17 +29,21 @@
 
 1. 點擊 **"New +"** → **"Web Service"**
 2. 選擇 **"Build and deploy from a Git repository"**
-3. 連接你的 GitHub repository
-4. 設定：
-   - Name: `fsvs-backend`
-   - Region: Singapore
-   - **Root Directory**: `backend` ⚠️ **重要**
-   - Runtime: Node
-   - Build Command: `npm install && npm run build`
-   - Start Command: `npm start`
-   - Plan: **Free** 或 **Starter**
+3. 點擊 **"Connect"** 連接你的 GitHub repository
+4. 選擇你的 repository（例如：`tzustu63/ogastudent`）
+5. 設定服務：
+   - **Name**: `fsvs-backend`
+   - **Region**: Singapore（或選擇 Oregon）
+   - **Branch**: `main`
+   - **Root Directory**: `backend` ⚠️ **非常重要！必須填寫**
+   - **Environment**: 選擇 `Node`
+   - **Build Command**: 留空或填 `npm install && npm run build`
+   - **Start Command**: 留空或填 `npm start`
+   - **Instance Type**: 選擇 **Free** 或 **Starter**
 
-5. 添加環境變數：
+6. 點擊 **"Advanced"** 展開進階設定
+
+7. 添加環境變數（Environment Variables）：
    ```
    DATABASE_URL=（步驟 1 的 Internal Database URL）
    JWT_SECRET=請改成一個長的隨機字串至少32字元
@@ -51,47 +55,53 @@
    FRONTEND_URL=（稍後填入）
    ```
    
-   💡 **提示**：不需要設定 REDIS_URL，系統會自動在沒有 Redis 的情況下運行
+   💡 **提示**：
+   - 不需要設定 REDIS_URL，系統會自動在沒有 Redis 的情況下運行
+   - Render 會自動偵測 `package.json` 並執行建置
 
-6. 點擊 **"Create Web Service"**
-7. 等待部署完成（3-5 分鐘）
-8. 複製後端網址（例如：`https://fsvs-backend.onrender.com`）
+8. 點擊 **"Create Web Service"**
+9. 等待部署完成（首次約 5-8 分鐘）
+10. 部署成功後，點擊服務名稱，複製網址（例如：`https://fsvs-backend.onrender.com`）
 
 ---
 
 ### 步驟 3：部署前端
 
 1. 點擊 **"New +"** → **"Web Service"**
-2. 選擇同一個 GitHub repository
-3. 設定：
-   - Name: `fsvs-frontend`
-   - Region: Singapore
-   - **Root Directory**: `frontend` ⚠️ **重要**
-   - Runtime: Node
-   - Build Command: `npm install && npm run build`
-   - Start Command: `npm run start`
-   - Plan: **Free** 或 **Starter**
+2. 選擇 **"Build and deploy from a Git repository"**
+3. 選擇同一個 GitHub repository
+4. 設定服務：
+   - **Name**: `fsvs-frontend`
+   - **Region**: Singapore（與後端相同）
+   - **Branch**: `main`
+   - **Root Directory**: `frontend` ⚠️ **非常重要！必須填寫**
+   - **Environment**: 選擇 `Node`
+   - **Build Command**: 留空或填 `npm install && npm run build`
+   - **Start Command**: 留空或填 `npm run start`
+   - **Instance Type**: 選擇 **Free** 或 **Starter**
 
-4. 添加環境變數：
+5. 點擊 **"Advanced"** 展開進階設定
+
+6. 添加環境變數：
    ```
-   VITE_API_URL=（步驟 3.8 的後端網址）
+   VITE_API_URL=（步驟 2.10 的後端網址）
    NODE_ENV=production
    ```
 
-5. 點擊 **"Create Web Service"**
-6. 等待部署完成（3-5 分鐘）
-7. 複製前端網址（例如：`https://fsvs-frontend.onrender.com`）
+7. 點擊 **"Create Web Service"**
+8. 等待部署完成（首次約 5-8 分鐘）
+9. 部署成功後，複製前端網址（例如：`https://fsvs-frontend.onrender.com`）
 
 ---
 
 ### 步驟 4：更新後端 CORS 設定
 
 1. 回到後端服務頁面
-2. 點擊 **"Environment"**
-3. 找到 `FRONTEND_URL`
-4. 更新為步驟 3.7 的前端網址
+2. 點擊左側 **"Environment"** 標籤
+3. 找到 `FRONTEND_URL` 變數
+4. 更新為步驟 3.9 的前端網址
 5. 點擊 **"Save Changes"**
-6. 等待自動重新部署（1-2 分鐘）
+6. 等待自動重新部署（約 2-3 分鐘）
 
 ---
 

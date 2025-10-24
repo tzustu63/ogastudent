@@ -63,19 +63,20 @@ git push -u origin main
 1. 點擊 **"New +"** → **"Web Service"**
 2. 選擇 **"Build and deploy from a Git repository"**
 3. 點擊 **"Connect"** 連接你的 GitHub repository
-4. 設定後端服務：
+4. 選擇你的 repository
+5. 設定後端服務：
    - **Name**: `fsvs-backend`
-   - **Region**: 與資料庫相同區域
+   - **Region**: 與資料庫相同區域（Singapore 或 Oregon）
    - **Branch**: `main`
-   - **Root Directory**: `backend` ⚠️ **非常重要**
-   - **Runtime**: `Node`
-   - **Build Command**: `npm install && npm run build`
-   - **Start Command**: `npm start`
-   - **Plan**: 選擇 **Free** 或 **Starter ($7/月)**
+   - **Root Directory**: `backend` ⚠️ **非常重要！必須填寫**
+   - **Environment**: 選擇 `Node`
+   - **Build Command**: 留空（Render 會自動偵測）或填 `npm install && npm run build`
+   - **Start Command**: 留空（Render 會自動偵測）或填 `npm start`
+   - **Instance Type**: 選擇 **Free** 或 **Starter ($7/月)**
 
-5. 點擊 **"Advanced"** 展開進階設定
+6. 點擊 **"Advanced"** 展開進階設定
 
-6. 添加環境變數（Environment Variables）：
+7. 添加環境變數（Environment Variables）：
 
 ```bash
 # 資料庫連線（使用步驟 1 複製的 Internal Database URL）
@@ -97,11 +98,14 @@ UPLOAD_DIR=/tmp/uploads
 FRONTEND_URL=https://your-frontend.onrender.com
 ```
 
-💡 **提示**：不需要設定 REDIS_URL，系統會自動在沒有 Redis 的情況下運行
+💡 **提示**：
+- 不需要設定 REDIS_URL，系統會自動在沒有 Redis 的情況下運行
+- Render 會自動偵測 `package.json` 並執行建置
+- Build Command 和 Start Command 可以留空讓 Render 自動偵測
 
-7. 點擊 **"Create Web Service"**
-8. 等待部署完成（約 3-5 分鐘）
-9. 部署完成後，複製後端網址（例如：`https://fsvs-backend.onrender.com`）
+8. 點擊 **"Create Web Service"**
+9. 等待部署完成（首次約 5-8 分鐘）
+10. 部署完成後，點擊服務名稱，複製網址（例如：`https://fsvs-backend.onrender.com`）
 
 ### 步驟 3：部署前端服務
 
@@ -112,13 +116,15 @@ FRONTEND_URL=https://your-frontend.onrender.com
    - **Name**: `fsvs-frontend`
    - **Region**: 與後端相同區域
    - **Branch**: `main`
-   - **Root Directory**: `frontend` ⚠️ **非常重要**
-   - **Runtime**: `Node`
-   - **Build Command**: `npm install && npm run build`
-   - **Start Command**: `npm run start`
-   - **Plan**: 選擇 **Free** 或 **Starter ($7/月)**
+   - **Root Directory**: `frontend` ⚠️ **非常重要！必須填寫**
+   - **Environment**: 選擇 `Node`
+   - **Build Command**: 留空或填 `npm install && npm run build`
+   - **Start Command**: 留空或填 `npm run start`
+   - **Instance Type**: 選擇 **Free** 或 **Starter ($7/月)**
 
-5. 添加環境變數：
+5. 點擊 **"Advanced"** 展開進階設定
+
+6. 添加環境變數：
 
 ```bash
 # 後端 API 網址（使用步驟 3.9 複製的後端網址）
