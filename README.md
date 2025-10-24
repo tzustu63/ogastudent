@@ -1,187 +1,112 @@
-# 外國學生受教權查核系統 (Foreign Student Verification System)
+# 外國學生受教權查核系統
 
-一個以學生為中心的網站平台，讓各個單位能夠上傳佐證資料或連結到特定網頁，供全球處與教育部確認學生學習狀況。
+Foreign Student Verification System - 用於管理和追蹤外國學生必要文件的 Web 應用程式。
 
-## 系統特色
+## 🚀 快速開始
 
-- 🎯 **以學生為中心**: 所有資料以學生為核心進行組織和管理
-- 🔐 **權限管理**: 不同單位只能上傳其負責的資料類型
-- 📊 **追蹤記錄**: 完整記錄所有操作歷程，包含上傳者、時間、備註
-- 📈 **進度監控**: 即時監控各學生資料完成度和整體進度
-- 🔍 **稽核功能**: 提供完整的稽核報表和資料追蹤
+### Railway 部署（推薦）
 
-## 技術架構
+詳細部署步驟請參考 [RAILWAY_DEPLOYMENT.md](./RAILWAY_DEPLOYMENT.md)
 
-### 前端
-- **框架**: React 18 + TypeScript
-- **UI 庫**: Ant Design
-- **狀態管理**: Zustand
-- **路由**: React Router
-- **建置工具**: Vite
+**簡要步驟：**
+1. 推送程式碼到 GitHub
+2. 在 Railway 部署後端（選擇 `backend` 資料夾）
+3. 添加 PostgreSQL 資料庫
+4. 設定後端環境變數
+5. 在 Railway 部署前端（選擇 `frontend` 資料夾）
+6. 設定前端環境變數
 
-### 後端
-- **運行環境**: Node.js + Express
-- **語言**: TypeScript
-- **資料庫**: PostgreSQL
-- **快取**: Redis
-- **檔案儲存**: AWS S3 / MinIO
-- **身份驗證**: JWT + LDAP
+**預估費用：** 約 $13-18/月（約 NT$400-550）
 
-### 部署
-- **容器化**: Docker + Docker Compose
-- **開發環境**: 本地開發容器
-- **生產環境**: Kubernetes (可選)
+### 本地開發
 
-## 快速開始
+#### 前置需求
+- Node.js 18+
+- PostgreSQL 14+
+- npm 或 yarn
 
-### 前置需求
-- Docker 20.10+
-- Docker Compose 2.0+
-- Git
-
-### 5 分鐘快速啟動
+#### 安裝步驟
 
 ```bash
-# 1. 複製專案
+# 1. Clone 專案
 git clone <repository-url>
-cd foreign-student-verification-system
+cd InternationalStudent
 
-# 2. 啟動開發環境
-docker compose up -d
-
-# 3. 初始化資料庫
-./scripts/init-database.sh
-
-# 4. 訪問應用
-# 前端: http://localhost:3000
-# 後端: http://localhost:5001/api/health
-# MinIO: http://localhost:9001
-```
-
-詳細說明請參考 [快速開始指南](QUICKSTART.md)
-
-## 文件
-
-- 📖 [快速開始指南](QUICKSTART.md) - 5 分鐘快速啟動
-- 🚀 [部署指南](DEPLOYMENT.md) - 完整的部署說明
-- 🔧 [維護文件](MAINTENANCE.md) - 系統維護和故障排除
-- 📜 [腳本說明](scripts/README.md) - 部署和維護腳本使用說明
-
-## 部署
-
-### 開發環境
-
-```bash
-docker compose up -d
-```
-
-### 生產環境
-
-```bash
-# 1. 設定環境變數
-cp .env.production.example .env.production
-nano .env.production
-
-# 2. 執行部署
-./scripts/deploy.sh production
-
-# 3. 驗證部署
-./scripts/health-check.sh
-```
-
-詳細部署流程請參考 [部署指南](DEPLOYMENT.md)
-
-## 開發指令
-
-```bash
-# 安裝所有依賴
+# 2. 安裝依賴
 npm install
 
-# 啟動開發伺服器
+# 3. 設定環境變數
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+# 編輯 backend/.env 設定資料庫連線等
+
+# 4. 啟動開發伺服器
 npm run dev
 
-# 建置專案
-npm run build
-
-# 執行測試
-npm run test
-
-# 程式碼檢查
-npm run lint
-
-# 修正程式碼格式
-npm run lint:fix
+# 或分別啟動
+npm run dev:backend  # 後端 (port 5001)
+npm run dev:frontend # 前端 (port 3000)
 ```
 
-## 專案結構
+#### 訪問應用程式
+- 前端：http://localhost:3000
+- 後端 API：http://localhost:5001/api
 
-```
-foreign-student-verification-system/
-├── backend/                 # 後端 API
-│   ├── src/
-│   │   ├── controllers/     # API 控制器
-│   │   ├── models/         # 資料模型
-│   │   ├── services/       # 業務邏輯
-│   │   ├── middleware/     # 中介軟體
-│   │   ├── routes/         # 路由定義
-│   │   ├── utils/          # 工具函數
-│   │   ├── config/         # 配置檔案
-│   │   └── types/          # TypeScript 類型
-│   ├── package.json
-│   └── tsconfig.json
-├── frontend/               # 前端應用
-│   ├── src/
-│   │   ├── components/     # React 元件
-│   │   ├── pages/          # 頁面元件
-│   │   ├── hooks/          # 自訂 Hooks
-│   │   ├── services/       # API 服務
-│   │   ├── stores/         # 狀態管理
-│   │   ├── utils/          # 工具函數
-│   │   └── types/          # TypeScript 類型
-│   ├── package.json
-│   └── tsconfig.json
-├── .kiro/                  # Kiro 規格文件
-│   └── specs/
-├── docker-compose.yml      # Docker 編排
-└── README.md
-```
+#### 預設管理員帳號
+- 帳號：`admin`
+- 密碼：`admin123`（首次登入後請立即修改）
 
-## 資料庫設計
+## 📚 功能特色
 
-系統採用 PostgreSQL 作為主要資料庫，包含以下核心資料表：
+- 👥 **人員管理** - 管理系統使用者（管理員、單位職員、稽核人員）
+- 📚 **學生管理** - 管理外國學生資料和文件
+- 📄 **文件管理** - 18種必要文件的上傳和追蹤
+- ✅ **文件審核** - 稽核人員可以審核文件狀態
+- 📊 **報表統計** - 完整的進度報表和統計
+- 🔔 **通知系統** - 自動提醒和通知
 
-- `students`: 學生基本資料
-- `users`: 系統使用者
-- `units`: 學校單位
-- `document_types`: 文件類型定義
-- `student_documents`: 學生文件記錄
-- `tracking_records`: 操作追蹤記錄
+## 🏗️ 技術架構
 
-## API 文件
+### 前端
+- React 18 + TypeScript
+- Ant Design UI 框架
+- Vite 建置工具
+- Zustand 狀態管理
 
-API 遵循 RESTful 設計原則，主要端點包括：
+### 後端
+- Node.js + Express
+- TypeScript
+- PostgreSQL 資料庫
+- JWT 身份驗證
 
-- `GET /api/health` - 系統健康檢查
-- `POST /api/auth/login` - 使用者登入
-- `GET /api/students` - 取得學生清單
-- `POST /api/documents/upload` - 上傳文件
-- `GET /api/reports/completion` - 完成度報表
+## 🎯 系統角色
 
-## 貢獻指南
+1. **系統管理員 (admin)** - 完整系統權限
+2. **單位職員 (unit_staff)** - 上傳所屬單位的文件
+3. **稽核人員 (auditor)** - 審核文件狀態（唯讀）
 
-1. Fork 專案
-2. 建立功能分支 (`git checkout -b feature/amazing-feature`)
-3. 提交變更 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 開啟 Pull Request
+## 📋 必要文件類型
 
-## 授權條款
+系統管理 18 種必要文件，分別由不同單位負責：
 
-本專案採用 MIT 授權條款 - 詳見 [LICENSE](LICENSE) 檔案
+- **全球處**：招生規定、招生簡章、招生網頁、華語能力證明、英文能力證明、財力證明、錄取通知單、入學法規切結書、獎助學金
+- **註冊組**：畢業證書、中五生、歷年成績單、學雜費收退費基準
+- **實就組**：學生實習合約、畢業流向
+- **外語中心**：華語師資
+- **宿輔組**：宿舍
+- **各系所**：中英文對照學分時數表
 
-## 聯絡資訊
+## 📞 支援
 
-如有任何問題或建議，請聯繫：
-- 專案維護者: [維護者姓名]
-- Email: [email@university.edu.tw]
-- 專案網址: [repository-url]
+如有問題，請：
+1. 查看 [RAILWAY_DEPLOYMENT.md](./RAILWAY_DEPLOYMENT.md) 部署指南
+2. 建立 GitHub Issue
+3. 聯繫系統管理員
+
+## 📄 授權
+
+MIT License
+
+---
+
+**最後更新**: 2024-10-24

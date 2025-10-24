@@ -1,7 +1,12 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { message } from 'antd';
 
-const API_BASE_URL = '/api';
+// 支援環境變數配置 API URL
+// 開發環境：使用 /api（透過 Vite proxy）
+// 生產環境：使用 VITE_API_URL 環境變數
+const API_BASE_URL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api`.replace(/\/+/g, '/').replace(':/', '://') 
+  : '/api';
 
 // Create axios instance with UTF-8 encoding
 const apiClient: AxiosInstance = axios.create({
