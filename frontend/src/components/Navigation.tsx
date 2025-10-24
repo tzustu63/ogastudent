@@ -1,18 +1,17 @@
-import React from 'react';
-import { Menu } from 'antd';
+import React from "react";
+import { Menu } from "antd";
 import {
   HomeOutlined,
   UserOutlined,
-  FileOutlined,
   BarChartOutlined,
   BellOutlined,
   SettingOutlined,
-} from '@ant-design/icons';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuthStore } from '../stores';
-import type { MenuProps } from 'antd';
+} from "@ant-design/icons";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuthStore } from "../stores";
+import type { MenuProps } from "antd";
 
-type MenuItem = Required<MenuProps>['items'][number];
+type MenuItem = Required<MenuProps>["items"][number];
 
 const Navigation: React.FC = () => {
   const navigate = useNavigate();
@@ -22,55 +21,55 @@ const Navigation: React.FC = () => {
   const getMenuItems = (): MenuItem[] => {
     const baseItems: MenuItem[] = [
       {
-        key: '/',
+        key: "/",
         icon: <HomeOutlined />,
-        label: '首頁',
+        label: "首頁",
       },
       {
-        key: '/students',
+        key: "/students",
         icon: <UserOutlined />,
-        label: '學生管理',
+        label: "學生管理",
       },
     ];
 
     // 只有管理員可以看到人員管理
-    if (user?.role === 'admin') {
+    if (user?.role === "admin") {
       baseItems.push({
-        key: '/users',
+        key: "/users",
         icon: <UserOutlined />,
-        label: '人員管理',
+        label: "人員管理",
       });
     }
 
     // 管理員和稽核人員可以看到報表
-    if (user?.role === 'admin' || user?.role === 'auditor') {
+    if (user?.role === "admin" || user?.role === "auditor") {
       baseItems.push({
-        key: '/reports',
+        key: "/reports",
         icon: <BarChartOutlined />,
-        label: '報表統計',
+        label: "報表統計",
       });
     }
 
     // 所有角色都可以看到通知
     baseItems.push({
-      key: '/notifications',
+      key: "/notifications",
       icon: <BellOutlined />,
-      label: '通知',
+      label: "通知",
     });
 
     // 只有管理員可以看到系統設定
-    if (user?.role === 'admin') {
+    if (user?.role === "admin") {
       baseItems.push({
-        key: '/settings',
+        key: "/settings",
         icon: <SettingOutlined />,
-        label: '系統設定',
+        label: "系統設定",
       });
     }
 
     return baseItems;
   };
 
-  const handleMenuClick: MenuProps['onClick'] = (e) => {
+  const handleMenuClick: MenuProps["onClick"] = (e) => {
     navigate(e.key);
   };
 
@@ -80,7 +79,7 @@ const Navigation: React.FC = () => {
       selectedKeys={[location.pathname]}
       items={getMenuItems()}
       onClick={handleMenuClick}
-      style={{ height: '100%', borderRight: 0 }}
+      style={{ height: "100%", borderRight: 0 }}
     />
   );
 };

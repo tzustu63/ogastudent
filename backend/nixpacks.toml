@@ -2,10 +2,14 @@
 nixPkgs = ["nodejs_18"]
 
 [phases.install]
-cmds = ["npm install"]
+cmds = ["npm ci --only=production"]
 
 [phases.build]
 cmds = ["npm run build"]
 
 [start]
 cmd = "node dist/index.js"
+
+[variables]
+NODE_ENV = "production"
+PORT = "5000"
