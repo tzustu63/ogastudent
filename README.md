@@ -4,19 +4,20 @@ Foreign Student Verification System - 用於管理和追蹤外國學生必要文
 
 ## 🚀 快速開始
 
-### Railway 部署（推薦）
+### Render 部署（推薦）
 
-詳細部署步驟請參考 [RAILWAY_DEPLOYMENT.md](./RAILWAY_DEPLOYMENT.md)
+詳細部署步驟請參考 [RENDER_DEPLOYMENT.md](./RENDER_DEPLOYMENT.md) 或 [RENDER_SIMPLE_DEPLOY.md](./RENDER_SIMPLE_DEPLOY.md)
 
 **簡要步驟：**
 1. 推送程式碼到 GitHub
-2. 在 Railway 部署後端（選擇 `backend` 資料夾）
-3. 添加 PostgreSQL 資料庫
-4. 設定後端環境變數
-5. 在 Railway 部署前端（選擇 `frontend` 資料夾）
-6. 設定前端環境變數
+2. 在 Render 創建 PostgreSQL 和 Redis
+3. 部署後端（Root Directory: `backend`）
+4. 部署前端（Root Directory: `frontend`）
+5. 設定環境變數並更新 CORS
 
-**預估費用：** 約 $13-18/月（約 NT$400-550）
+**預估費用：** 
+- 免費方案：$0/月（有休眠限制）
+- 付費方案：約 $28/月（約 NT$850）
 
 ### 本地開發
 
@@ -99,7 +100,7 @@ npm run dev:frontend # 前端 (port 3000)
 ## 📞 支援
 
 如有問題，請：
-1. 查看 [RAILWAY_DEPLOYMENT.md](./RAILWAY_DEPLOYMENT.md) 部署指南
+1. 查看 [RENDER_DEPLOYMENT.md](./RENDER_DEPLOYMENT.md) 部署指南
 2. 建立 GitHub Issue
 3. 聯繫系統管理員
 
