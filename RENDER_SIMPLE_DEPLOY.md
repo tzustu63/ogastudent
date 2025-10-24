@@ -23,19 +23,9 @@
 
 ---
 
-### 步驟 2：創建 Redis
+### 步驟 2：部署後端
 
-1. 點擊 **"New +"** → **"Redis"**
-2. 設定：
-   - Name: `fsvs-redis`
-   - Region: Singapore
-   - Plan: **Free** 或 **Starter**
-3. 點擊 **"Create Redis"**
-4. 等待創建完成，複製 **Internal Redis URL**
-
----
-
-### 步驟 3：部署後端
+⚠️ **注意**：Redis 是可選的，系統沒有 Redis 也能正常運行（只是沒有快取功能）。Render 免費方案不提供 Redis，可以跳過。
 
 1. 點擊 **"New +"** → **"Web Service"**
 2. 選擇 **"Build and deploy from a Git repository"**
@@ -52,7 +42,6 @@
 5. 添加環境變數：
    ```
    DATABASE_URL=（步驟 1 的 Internal Database URL）
-   REDIS_URL=（步驟 2 的 Internal Redis URL）
    JWT_SECRET=請改成一個長的隨機字串至少32字元
    JWT_EXPIRES_IN=7d
    NODE_ENV=production
@@ -61,6 +50,8 @@
    UPLOAD_DIR=/tmp/uploads
    FRONTEND_URL=（稍後填入）
    ```
+   
+   💡 **提示**：不需要設定 REDIS_URL，系統會自動在沒有 Redis 的情況下運行
 
 6. 點擊 **"Create Web Service"**
 7. 等待部署完成（3-5 分鐘）
@@ -68,7 +59,7 @@
 
 ---
 
-### 步驟 4：部署前端
+### 步驟 3：部署前端
 
 1. 點擊 **"New +"** → **"Web Service"**
 2. 選擇同一個 GitHub repository
@@ -93,12 +84,12 @@
 
 ---
 
-### 步驟 5：更新後端 CORS 設定
+### 步驟 4：更新後端 CORS 設定
 
 1. 回到後端服務頁面
 2. 點擊 **"Environment"**
 3. 找到 `FRONTEND_URL`
-4. 更新為步驟 4.7 的前端網址
+4. 更新為步驟 3.7 的前端網址
 5. 點擊 **"Save Changes"**
 6. 等待自動重新部署（1-2 分鐘）
 
@@ -134,7 +125,7 @@
 - 限制：服務閒置 15 分鐘後休眠，下次訪問需 30-60 秒喚醒
 
 ### 付費方案（正式用）
-- **總計：$28/月**（約 NT$850）
+- **總計：$21/月**（約 NT$640，不含 Redis）
 - 優勢：服務不休眠，效能更好
 
 ---

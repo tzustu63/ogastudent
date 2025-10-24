@@ -12,14 +12,14 @@ services:
       - name: foreign_student_verification
         user: postgres
 
-  # Redis 快取
-  - type: redis
-    name: fsvs-redis
-    plan: free  # 或 starter
-    region: singapore
-    maxmemoryPolicy: allkeys-lru
-
   # 後端 API 服務
+  # 注意：Redis 是可選的，Render 免費方案不提供 Redis
+  # 如需 Redis，請手動添加並取消下方註解
+  # - type: redis
+  #   name: fsvs-redis
+  #   plan: starter
+  #   region: singapore
+  #   maxmemoryPolicy: allkeys-lru
   - type: web
     name: fsvs-backend
     env: node
@@ -38,11 +38,12 @@ services:
         fromDatabase:
           name: fsvs-database
           property: connectionString
-      - key: REDIS_URL
-        fromService:
-          name: fsvs-redis
-          type: redis
-          property: connectionString
+      # REDIS_URL 是可選的，如果沒有 Redis 服務可以不設定
+      # - key: REDIS_URL
+      #   fromService:
+      #     name: fsvs-redis
+      #     type: redis
+      #     property: connectionString
       - key: JWT_SECRET
         generateValue: true  # 自動生成隨機值
       - key: JWT_EXPIRES_IN

@@ -52,18 +52,13 @@ git push -u origin main
 6. 等待資料庫創建完成（約 1-2 分鐘）
 7. **重要**：複製 **Internal Database URL**（格式：`postgresql://...`）
 
-### 步驟 2：創建 Redis 實例
+### 步驟 2：部署後端服務
 
-1. 點擊 **"New +"** → **"Redis"**
-2. 設定 Redis：
-   - **Name**: `fsvs-redis`
-   - **Region**: 與資料庫相同區域
-   - **Plan**: 選擇 **Free** 或 **Starter ($7/月)**
-3. 點擊 **"Create Redis"**
-4. 等待 Redis 創建完成
-5. **重要**：複製 **Internal Redis URL**（格式：`redis://...`）
-
-### 步驟 3：部署後端服務
+⚠️ **關於 Redis**：
+- Redis 在此系統中是**可選的**，主要用於快取功能
+- Render 免費方案不提供 Redis 服務
+- 系統已設計成沒有 Redis 也能正常運行
+- 如需 Redis（付費方案 $7/月），可在部署後添加
 
 1. 點擊 **"New +"** → **"Web Service"**
 2. 選擇 **"Build and deploy from a Git repository"**
@@ -86,9 +81,6 @@ git push -u origin main
 # 資料庫連線（使用步驟 1 複製的 Internal Database URL）
 DATABASE_URL=postgresql://postgres:xxxxx@dpg-xxxxx-a/foreign_student_verification
 
-# Redis 連線（使用步驟 2 複製的 Internal Redis URL）
-REDIS_URL=redis://red-xxxxx:6379
-
 # JWT 設定（必須）
 JWT_SECRET=請改成一個長的隨機字串至少32字元以上
 JWT_EXPIRES_IN=7d
@@ -105,11 +97,13 @@ UPLOAD_DIR=/tmp/uploads
 FRONTEND_URL=https://your-frontend.onrender.com
 ```
 
+💡 **提示**：不需要設定 REDIS_URL，系統會自動在沒有 Redis 的情況下運行
+
 7. 點擊 **"Create Web Service"**
 8. 等待部署完成（約 3-5 分鐘）
 9. 部署完成後，複製後端網址（例如：`https://fsvs-backend.onrender.com`）
 
-### 步驟 4：部署前端服務
+### 步驟 3：部署前端服務
 
 1. 點擊 **"New +"** → **"Web Service"**
 2. 選擇 **"Build and deploy from a Git repository"**
@@ -137,16 +131,16 @@ NODE_ENV=production
 7. 等待部署完成（約 3-5 分鐘）
 8. 部署完成後，複製前端網址（例如：`https://fsvs-frontend.onrender.com`）
 
-### 步驟 5：更新後端 CORS 設定
+### 步驟 4：更新後端 CORS 設定
 
 1. 回到後端服務頁面
 2. 點擊左側 **"Environment"**
 3. 找到 `FRONTEND_URL` 變數
-4. 更新為步驟 4.8 的前端網址
+4. 更新為步驟 3.8 的前端網址
 5. 點擊 **"Save Changes"**
 6. 後端會自動重新部署（約 1-2 分鐘）
 
-### 步驟 6：初始化資料庫
+### 步驟 5：初始化資料庫
 
 資料庫會在後端首次啟動時自動初始化。
 
@@ -180,7 +174,6 @@ NODE_ENV=production
 
 ### 免費方案（適合測試）
 - PostgreSQL Free: $0
-- Redis Free: $0
 - Backend Free: $0
 - Frontend Free: $0
 - **總計：$0/月**
@@ -189,18 +182,21 @@ NODE_ENV=production
 - 服務閒置 15 分鐘後會休眠
 - 下次訪問需要 30-60 秒喚醒
 - 每月 750 小時免費運行時間
+- 無 Redis 快取功能
 
 ### 付費方案（適合正式使用）
 - PostgreSQL Starter: $7/月
-- Redis Starter: $7/月
 - Backend Starter: $7/月
 - Frontend Starter: $7/月
-- **總計：$28/月**（約 NT$850）
+- Redis Starter（可選）: $7/月
+- **總計：$21/月**（約 NT$640）
+- **含 Redis：$28/月**（約 NT$850）
 
 **優勢**：
 - 服務不會休眠
 - 更好的效能
 - 更多資源
+- 可選擇添加 Redis 快取
 
 ## 🔧 Render 配置檔案
 
@@ -211,6 +207,27 @@ NODE_ENV=production
 2. 連接你的 GitHub repository
 3. Render 會自動讀取 `render.yaml` 並創建所有服務
 4. 只需設定環境變數即可
+
+## 💡 關於 Redis 快取
+
+### Redis 的作用
+- 快取常用資料，減少資料庫查詢
+- 提升系統回應速度
+- 降低資料庫負載
+
+### 是否需要 Redis？
+- **測試/小型部署**：不需要，系統已設計成可選
+- **正式/大流量部署**：建議使用，可提升效能
+
+### 如何添加 Redis（付費方案）
+1. 在 Render Dashboard 點擊 **"New +"** → **"Redis"**
+2. 選擇 **Starter Plan** ($7/月)
+3. 創建完成後，複製 **Internal Redis URL**
+4. 在後端服務的 Environment 中添加：
+   ```
+   REDIS_URL=redis://red-xxxxx:6379
+   ```
+5. 儲存後後端會自動重新部署並啟用快取功能
 
 ## 📊 監控與日誌
 
