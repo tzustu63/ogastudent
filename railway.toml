@@ -1,0 +1,9 @@
+# Railway 配置檔案
+# 此專案包含兩個服務：backend 和 frontend
+# 請在 Railway 中分別部署這兩個服務
+
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+# 此檔案僅用於說明，實際部署請設定 Root Directory
