@@ -114,6 +114,9 @@ temp/
 *.swo
 *~
 
+# Kiro MCP 設定（包含 API Keys）
+.kiro/settings/mcp.json
+
 # OS
 .DS_Store
 .DS_Store?
