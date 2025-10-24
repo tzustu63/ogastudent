@@ -1,0 +1,33 @@
+/* 全域樣式 */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+/* Ant Design 客製化 */
+.ant-layout-header {
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+}
+
+.ant-layout-content {
+  background: #fff;
+}
+
+.ant-layout-footer {
+  padding: 24px 50px;
+}
+
+/* 使用者資訊區域 */
+.user-info-trigger:hover {
+  background-color: #f5f5f5;
+}
+
+.user-info-trigger .ant-space-item {
+  display: flex;
+  align-items: center;
+}

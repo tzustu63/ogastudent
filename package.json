@@ -1,0 +1,31 @@
+{
+  "name": "foreign-student-verification-system",
+  "version": "1.0.0",
+  "description": "外國學生受教權查核系統 - Foreign Student Verification System",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=backend && npm run build --workspace=frontend",
+    "test": "npm run test --workspace=backend && npm run test --workspace=frontend",
+    "lint": "npm run lint --workspace=backend && npm run lint --workspace=frontend"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^7.0.2",
+    "@types/uuid": "^10.0.0",
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.10",
+    "uuid": "^13.0.0"
+  }
+}
