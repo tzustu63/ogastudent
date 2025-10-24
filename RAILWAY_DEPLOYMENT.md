@@ -1,3 +1,17 @@
+# Railway 部署指南（Monorepo 專案）
+
+## ⚠️ 重要提示
+
+此專案是 **monorepo** 結構，包含 `backend` 和 `frontend` 兩個獨立的應用程式。
+在 Railway 部署時，需要**分別部署**這兩個服務。
+
+## 🔧 已完成的配置
+
+- ✅ `backend/nixpacks.toml` - 後端 Nixpacks 配置
+- ✅ `frontend/nixpacks.toml` - 前端 Nixpacks 配置
+- ✅ `backend/railway.json` - 後端 Railway 配置
+- ✅ `frontend/railway.json` - 前端 Railway 配置
+
 # Railway 部署指南
 
 ## 📋 部署前準備
@@ -29,9 +43,16 @@ git push -u origin main
 2. 使用 GitHub 帳號登入
 3. 點擊 **"New Project"**
 4. 選擇 **"Deploy from GitHub repo"**
-5. 選擇您的 repository
-6. Railway 會偵測到 monorepo，選擇 **`backend`** 資料夾
+5. 選擇您的 repository：`tzustu63/ogastudent`
+6. **重要**：Railway 會偵測到 monorepo，在配置頁面：
+   - 找到 **"Root Directory"** 或 **"Watch Paths"** 設定
+   - 輸入：`backend`
+   - 或在 **"Settings"** → **"Service"** → **"Root Directory"** 設定為 `backend`
 7. 點擊 **"Deploy"**
+
+**如果部署失敗，請檢查**：
+- Root Directory 是否設定為 `backend`
+- 查看 Build Logs 中的錯誤訊息
 
 ### 步驟 2：添加 PostgreSQL 資料庫
 
