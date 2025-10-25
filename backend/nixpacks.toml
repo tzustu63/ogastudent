@@ -9,3 +9,7 @@ cmds = ["npm run build"]
 
 [start]
 cmd = "npm start"
+
+[variables]
+PORT = "5000"
+NODE_ENV = "production"

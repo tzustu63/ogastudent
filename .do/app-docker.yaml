@@ -1,0 +1,90 @@
+name: ogastudent-verification-system
+region: sfo3
+
+# 使用 Docker 鏡像部署（避免 GitHub 認證問題）
+services:
+  - name: backend
+    image:
+      registry_type: DOCKER_HUB
+      repository: node
+      tag: 18-alpine
+    run_command: |
+      sh -c "
+        apk add --no-cache git &&
+        git clone https://github.com/tzustu63/ogastudent.git /app &&
+        cd /app/backend &&
+        npm install &&
+        npm run build &&
+        npm start
+      "
+    environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    http_port: 5000
+    routes:
+      - path: /api
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "5000"
+      - key: JWT_SECRET
+        value: "your-super-secret-jwt-key-for-testing-please-change-in-production"
+      - key: JWT_EXPIRES_IN
+        value: "24h"
+      - key: DB_HOST
+        value: ${postgres-db.HOSTNAME}
+      - key: DB_PORT
+        value: ${postgres-db.PORT}
+      - key: DB_NAME
+        value: ${postgres-db.DATABASE}
+      - key: DB_USER
+        value: ${postgres-db.USER}
+      - key: DB_PASSWORD
+        value: ${postgres-db.PASSWORD}
+      - key: CORS_ORIGIN
+        value: ${frontend.URL}
+      - key: LOG_LEVEL
+        value: "info"
+      - key: REDIS_HOST
+        value: ""
+      - key: REDIS_PORT
+        value: ""
+      - key: REDIS_PASSWORD
+        value: ""
+
+  - name: frontend
+    image:
+      registry_type: DOCKER_HUB
+      repository: node
+      tag: 18-alpine
+    run_command: |
+      sh -c "
+        apk add --no-cache git &&
+        git clone https://github.com/tzustu63/ogastudent.git /app &&
+        cd /app/frontend &&
+        npm install &&
+        npm run build &&
+        npm start
+      "
+    environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    http_port: 8080
+    routes:
+      - path: /
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_URL
+        value: ${backend.URL}/api
+      - key: PORT
+        value: "8080"
+
+# 資料庫配置
+databases:
+  - name: postgres-db
+    engine: PG
+    version: "15"
+    size: db-s-1vcpu-1gb
+    num_nodes: 1

@@ -134,6 +134,7 @@ DigitalOcean 會自動檢測到您的 monorepo 結構。
 
 **方案 1: 使用包含 devDependencies 的建置命令**
 將 Build Command 改為：
+
 ```bash
 CI=false npm ci --include=dev && npm run build
 ```
@@ -143,11 +144,13 @@ CI=false npm ci --include=dev && npm run build
 
 **方案 3: 使用 start:prod 腳本**
 將 Build Command 改為：
+
 ```bash
 npm ci --production=false && npm run build
 ```
 
 Run Command 改為：
+
 ```bash
 npm run start:prod
 ```
