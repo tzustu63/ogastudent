@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "start": "npm run build && npx serve -s dist -l ${PORT:-8080}",
+    "start": "npx serve -s dist -l $PORT",
     "preview": "vite preview",
     "build:deploy": "npm ci --include=dev && npm run build",
     "test": "vitest --run",
