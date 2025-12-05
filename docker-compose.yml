@@ -88,7 +88,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: fsvs-frontend
     environment:
-      VITE_API_URL: http://localhost:5001/api
+      VITE_API_URL: http://localhost:5001
     ports:
       - "3000:3000"
     volumes:

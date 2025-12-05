@@ -15,7 +15,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://backend:5000',
+        target: process.env.VITE_API_URL || 'http://localhost:5000',
         changeOrigin: true,
         configure: (proxy, _options) => {
           proxy.on('proxyRes', (proxyRes, _req, _res) => {

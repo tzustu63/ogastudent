@@ -113,3 +113,7 @@ Start Command: npx serve -s dist -l $PORT
 **解決**：設定完成後必須點擊 Deploy 按鈕
 
 根據官方文件，這是 Railway 推薦的 monorepo 部署方式！
+
+
+
+

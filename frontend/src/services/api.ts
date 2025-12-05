@@ -5,7 +5,9 @@ import { message } from 'antd';
 // 開發環境：使用 /api（透過 Vite proxy）
 // 生產環境：使用 VITE_API_URL 環境變數
 const API_BASE_URL = import.meta.env.VITE_API_URL 
-  ? `${import.meta.env.VITE_API_URL}/api`.replace(/\/+/g, '/').replace(':/', '://') 
+  ? (import.meta.env.VITE_API_URL.endsWith('/api') 
+      ? import.meta.env.VITE_API_URL 
+      : `${import.meta.env.VITE_API_URL}/api`)
   : '/api';
 
 // Create axios instance with UTF-8 encoding
