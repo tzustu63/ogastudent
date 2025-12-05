@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # 安裝所有依賴（包含 devDependencies）
-RUN npm ci
+RUN npm install
 
 # 複製原始碼
 COPY . .
@@ -31,7 +31,7 @@ RUN addgroup -g 1001 -S nodejs && \
 COPY package*.json ./
 
 # 只安裝生產依賴
-RUN npm ci --only=production && \
+RUN npm install --only=production && \
     npm cache clean --force
 
 # 從 builder 階段複製建置結果
