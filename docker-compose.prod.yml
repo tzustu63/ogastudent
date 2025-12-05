@@ -171,7 +171,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: ${VITE_API_URL:-http://localhost:5001/api}
+        VITE_API_URL: ${VITE_API_URL:-http://18.179.120.246:5001/api}
     container_name: fsvs-frontend
     restart: unless-stopped
     ports:

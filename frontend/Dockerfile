@@ -3,6 +3,10 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
+# 接受 build args
+ARG VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
+
 # 複製 package 檔案
 COPY package*.json ./
 
